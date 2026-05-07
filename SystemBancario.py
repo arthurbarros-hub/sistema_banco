@@ -9,7 +9,9 @@ while True:
     print ("2 - Depositar ")
     print ("3 - Sacar ")
     print ("4 - Ver extrato ")
-    print ("5 - Sair ")
+    print ("5 - Investimentos")
+    print ("6 - Meu porquinho")
+    print ("7 - Sair ")
     print ("========================") 
 
     Opcao = input("Digite seu interesse:  ")
@@ -45,3 +47,30 @@ while True:
             print ("Nenhuma movimentação")
        else:
             print (extrato)
+
+    elif Opcao == "5":
+        print ("Digite o quanto você deseja investir: ")
+        valor = float(input("Valor do investimento R$: "))
+        if valor > 0:
+            saldo = saldo - valor
+            print ("Investimento realizado! ")
+            extrato = extrato + f"Investimento de R$ {valor}\n"
+        else:
+            print ("Valor Inválido! ")
+
+    elif Opcao == "6":
+        print ("Digite o quanto você deseja depositar no porquinho: ")
+        valor = float(input("Valor do depósito R$: "))
+        if valor > 0:
+            saldo = saldo + valor
+            print ("Depósito realizado! ")
+            extrato = extrato + f"Depósito de R$ {valor}\n"
+        else:
+            print ("Valor Inválido! ")
+
+    elif Opcao == "7":
+        print ("Saindo...")
+        break
+
+    else:
+        print ("Opção inválida! Por favor, escolha uma opção válida.")
