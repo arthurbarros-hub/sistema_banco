@@ -1,6 +1,11 @@
 saldo = 0
 extrato = ""
 
+taxa_mensal = 0.05 
+meses_para_mostrar = 5
+anos_para_mostrar = 1
+porquinho_meses_para_mostrar = 0.01
+
 while True:
     print ("=== SISTEMA BANCÁRIO ===")
     
@@ -11,7 +16,8 @@ while True:
     print ("4 - Ver extrato ")
     print ("5 - Investimentos")
     print ("6 - Meu porquinho")
-    print ("7 - Sair ")
+    print ("7 - Sacar valor do porquinho")
+    print ("8 - Sair")
     print ("========================") 
 
     Opcao = input("Digite seu interesse:  ")
@@ -33,7 +39,7 @@ while True:
     elif Opcao == "3":
         valor = float(input("Digite a quantia que deja sacar R$: "))
         if valor > 0:
-            if valor >= valor:
+            if saldo >= valor:
                 saldo = saldo - valor
                 print ("Saque realizado !")
                 extrato = extrato + f"Saque de R$ {valor}\n"
@@ -52,9 +58,19 @@ while True:
         print ("Digite o quanto você deseja investir: ")
         valor = float(input("Valor do investimento R$: "))
         if valor > 0:
-            saldo = saldo - valor
+            saldo = saldo - valor #o valor do investimento é retirado do saldo para ser investido
             print ("Investimento realizado! ")
-            extrato = extrato + f"Investimento de R$ {valor}\n"
+            extrato = extrato + f"Investimento de R$ {valor}\n" #o f antes da string permite a inserção de variáveis dentro da string usando chaves {}
+
+            meses = meses_para_mostrar
+            anos = anos_para_mostrar   
+            meses_em_anos = anos * 12  #conversão de anos para meses ja que a taxa é mensal
+
+            montante_meses = valor * (1 + taxa_mensal) ** meses #o 1 representa o 100% do valor inicial
+            montante_anos = valor * (1 + taxa_mensal) ** meses_em_anos #os dois ** significam "elevado a"
+
+            print (f"Em {meses} meses, seu dinheiro vira: R$ {montante_meses:.2f}")
+            print (f"Em {anos} anos, seu dinheiro vira: R$ {montante_anos:.2f}")
         else:
             print ("Valor Inválido! ")
 
@@ -65,12 +81,26 @@ while True:
             saldo = saldo + valor
             print ("Depósito realizado! ")
             extrato = extrato + f"Depósito de R$ {valor}\n"
-        else:
-            print ("Valor Inválido! ")
+
+            # ganho fixo de R$0.01 por dia no porquinho
+            ganho_diario = 0.01
+            dias_para_lucro_igual = int(round(valor * 100)) # o round é usado para arredondar o valor para o inteiro mais próximo.
+            print("Você ganha R$0.01 por dia no porquinho.")
+            print(f"Levará {dias_para_lucro_igual} dias para lucrar R$ {valor:.2f}.")
 
     elif Opcao == "7":
+        valor = float(input("Digite a quantia que deja sacar do seu porquinho R$: "))
+        if valor > 0:
+            if valor <= saldo:  #mostra que o valor a ser sacado é menor ou igual ao saldo do porquinho
+                saldo = saldo - valor
+                print ("Saque realizado !")
+                extrato = extrato + f"Saque de R$ {valor}\n"
+            else:
+                print ("Saldo Insuficiente! ")
+
+    elif Opcao == "8":
         print ("Saindo...")
-        break
+        break   #o break é usado para sair do loop while quando o usuário escolhe a opção 8
 
     else:
-        print ("Opção inválida! Por favor, escolha uma opção válida.")
+        print ("Opção inválida! Por favor, escolha uma opção válida.") 
